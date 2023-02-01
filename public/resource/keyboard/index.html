@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Virtual Keyboard</title>
+  <link rel="stylesheet" href="dist/virtual-keyboard.css">
+    <script src="dist/virtual-keyboard.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <div class="container">
+    <input id="monId" type="text" virtual-keyboard>
+    <div class="virtual-keyboard-hook" data-target-id="monId" data-keyboard-mapping="azerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+    <textarea name="" id="monId2" cols="30" rows="10" virtual-keyboard></textarea>
+    <div class="virtual-keyboard-hook" data-target-id="monId2" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+  </div>
+</body>
+
+</html>
