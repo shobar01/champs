@@ -16,27 +16,24 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <title>Backend Ticketing</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-    <script src="<?php echo e(asset('public/resource/js/feather-icons.min.js')); ?>"></script>
+    <script src="{{asset('public/resource/js/feather-icons.min.js')}}"></script>
 </head>
 
 <body>
-    <?php echo $__env->make('backend.css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    @include('backend.css')
     <div class="loading" id="loader"></div>
     <div class="head text-center">
-        <img src="<?php echo e(asset('public/resource/img/footer-logo.png')); ?>" class="head-img">
+        <img src="{{asset('public/resource/img/footer-logo.png')}}" class="head-img">
     </div>
-    <?php echo $__env->yieldContent('content'); ?>
+    @yield('content')
     <div class="foot">
-        <img src="<?php echo e(asset('public/resource/img/footer.jpg')); ?>" class="foot-img">
+        <img src="{{asset('public/resource/img/footer.jpg')}}" class="foot-img">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
-    <script>
-        $(".theSelect").select2();
-    </script>
+
     <script>
         $(window).on('load', function () {
             $('#loader').delay(450).fadeOut('slow');
@@ -85,4 +82,4 @@
 
 </body>
 
-</html><?php /**PATH G:\ChampApplication\xampp\htdocs\champs-mobile\resources\views/backend/layout/layout.blade.php ENDPATH**/ ?>
+</html>

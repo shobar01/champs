@@ -78,11 +78,32 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
                 <?php endif; ?>
+
+                <?php if($long == null): ?>
+                <script>
+                    function alert(){
+                    Swal.fire({
+                        icon: 'warning',
+                        title:'Lokasi Tidak di Temukan',
+                        showCancelButton: false,
+                        confirmButtonText: 'Kembali',
+                        reverseButtons: true,
+                        allowOutsideClick: false
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.close()
+                        }
+                        })
+                }alert()
+                </script>
+                <?php else: ?>
                 <div class="btnx">
                     <button class="btn btn-add" type="button" data-toggle="modal" data-target="#exampleModal"><i
                             class="fa fa-plus fa-2x"></i></button>
                     <span class="title">Add Request</span>
                 </div>
+                <?php endif; ?>
+
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div class="panel p-3">
@@ -125,7 +146,7 @@
 <?php echo $__env->make('ticketing.modal.tfoto', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('ticketing.modal.terima', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('ticketing.modal.tfototer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
+<?php echo $__env->make('ticketing.modal.uniform', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('ticketing.script', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <input type="hidden" id="testobay" value="F">
 

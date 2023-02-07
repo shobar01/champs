@@ -92,6 +92,11 @@
                                 <p class="f-label">{{$df['nmstatus']}}</p>
                             </div>
                             @endforeach
+                            <div class="btdwn">
+                                <button class="btn btn-dwn" type="button" onclick="laporan()"><i
+                                        class="fa fa-download fa-1x bold"></i>
+                                    Export</button>
+                            </div>
                             <div class="btkat">
                                 <button class="btn btn-add" type="button" onclick="addkateg()"><i
                                         class="fa fa-plus fa-1x bold"></i>Add Kategori</button>
@@ -107,6 +112,7 @@
 </div>
 
 </div>
+@include('backend.modal.excel')
 @include('backend.modal.addkat')
 @include('backend.modal.informasi')
 @include('backend.modal.tglhist')

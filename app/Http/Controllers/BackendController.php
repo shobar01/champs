@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TicketExport;
 use App\Http\Controllers\TicketingController;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Session;
 use Storage;
 
@@ -58,6 +60,11 @@ class BackendController extends TicketingController
         Session::forget('kddept');
         $kddept = $json['kddept'];
         session(['kddept' => $kddept]);
+
+        Session::forget('df_outlet');
+        $df_outlet = $json['df_outlet'];
+        session(['df_outlet' => $df_outlet]);
+
         $df_status = $json['df_status'];
         $lskat = $json['lskat'];
         $lstrack = $json['lstrack'];
@@ -109,7 +116,9 @@ class BackendController extends TicketingController
         // dd($request->all());
         $kdoutlet = session('kdoutlet');
         $tipe = $request->input('tipe');
-        $nmtujuan = $request->input('nmtujuan');
+        // $nmtujuan = $request->input('nmtujuan');
+        $dept = $request->input('depart');
+        $outlet = $request->input('nmoutlet');
         $nmstatus = $request->input('nmstatus');
         $nipreq = $request->input('nipreq');
         $kdticket = $request->input('kdticket');
@@ -122,10 +131,10 @@ class BackendController extends TicketingController
         $foto1 = $request->input('bayz');
         $foto2 = $request->input('backendfoto');
         if ($foto2 != "") {
-            $dir = $kdoutlet . '/' . date('Y-m');
+            $dir = $dept . '/' . date('Y-m');
             $image = str_replace('data:image/webp;base64,', '', $foto2);
             $image = str_replace(' ', '+', $image);
-            $imageName = $kdoutlet . '-' . date('YmdHis') . '-' . '-f2.' . 'png';
+            $imageName = $dept . '-' . date('YmdHis') . '-' . '-f2.' . 'png';
             $file = base64_decode($image);
             Storage::disk('backend')->put($dir . '/' . $imageName, $file);
             $linkurl2 = asset("public/storage/backend/" . $dir . '/' . $imageName);
@@ -295,5 +304,35 @@ class BackendController extends TicketingController
             $this->notif($nip, $ket, $ket, 'Status Ticketing Di Alihkan');
         }
         return redirect()->back()->with('success', 'Data berhasil diupdate');
+    }
+
+    public function report(Request $request)
+    {
+        $client = new \GuzzleHttp\Client();
+        $today = date("Y-m-d");
+        $tglawal = $request->input('tglawal');
+        $tglakhir = $request->input('tglakhir');
+        $kdoutlet = $request->input('kdoutlet');
+        return Excel::download(new TicketExport($tglawal, $tglakhir, $kdoutlet),
+            'laporan_ticketing ' . $today . ' .xlsx');
+        $rspsrk = $client->post('http://localhost/ticketing_api/report.php', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'kdoutlet' => $kdoutlet,
+                'tglawal' => $tglawal,
+                'tglakhir' => $tglakhir,
+            ],
+        ]
+        );
+        $jsons = $rspsrk->getBody()->getContents();
+        $json = json_decode($jsons, true);
+        // dd($jsons);
+
+        $awal = \Carbon\Carbon::parse($tglawal)->translatedFormat('l, d F Y');
+        $akhir = \Carbon\Carbon::parse($tglakhir)->translatedFormat('l, d F Y');
+        $periode = $awal . ' - ' . $akhir;
+        return view('backend.report', compact('json', 'periode'));
     }
 }

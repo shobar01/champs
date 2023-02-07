@@ -1375,6 +1375,12 @@
         height: auto;
     }
 
+    .scll {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 200px;
+    }
+
     .btn-bukti {
         position: inherit;
         color: white;
@@ -1412,6 +1418,49 @@
         color: white;
         border-radius: 12px;
     }
+
+    .rap {
+        white-space: nowrap;
+    }
+
+    .ckbx {
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 5px !important;
+    }
+
+    .caribrg {
+        border-radius: 12px;
+        font-size: 14px;
+    }
+
+
+    .tbd {
+        height: 150px;
+    }
+
+    .style-7::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+
+    .style-7::-webkit-scrollbar {
+        width: 10px;
+        background-color: #F5F5F5;
+    }
+
+    .style-7::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-image: -webkit-gradient(linear,
+                left bottom,
+                left top,
+                color-stop(0.44, rgb(62, 65, 60)),
+                color-stop(0.72, rgb(116, 72, 72)),
+                color-stop(0.86, rgb(48, 45, 45)));
+    }
+
 
     /* backend */
 </style><?php /**PATH G:\ChampApplication\xampp\htdocs\champs-mobile\resources\views/ticketing/css.blade.php ENDPATH**/ ?>

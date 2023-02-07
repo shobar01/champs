@@ -3,11 +3,8 @@
     <div class="modal-dialog modal-bottom">
         <div class="modal-content content-bottom">
             <div class="modal-header {{$bgcolor}} content-bottom">
-                <input type="hidden" id="txtujuan">
-                <input type="hidden" id="txmessage">
-                <input type="hidden" id="tiket">
                 <h5 class="modal-title">
-                    <span id="detailtcLabel">Detail Tiket</span>
+                    <span id="detailtcLabel">BE Detail Tiket</span>
                     <input type="text" class="titlereq" readonly><i class="fa fa-copy fa-1x cps" onclick="copied()"></i>
                     <p class="kat pkat"></p>
                 </h5>
@@ -18,15 +15,16 @@
             <div class="modal-body body-bottom pt-0" id="isidetail">
             </div>
 
+            {{-- <div class="btsts">
+                <button id="proses" class="btn {{$bgcolor}} br50" type="button" onclick="proses()"><i
+                        class="fa fa-history fa-2x"></i></button>
+            </div> --}}
             <div>
-                <button id="reminder" onclick="reminder()" type="button" class="btn {{$bgcolor}} bremind"><i
-                        class="fa fa-phone" aria-hidden="true"></i>
-                    Reminder</button>
-                <button id="selesai" type="button" class="btn bselesai"><i class="fa fa-check"></i>
-                    Selesai</button>
-                <button id="terima" onclick="detterima()" type="button" class="btn {{$bgcolor}} prs"><i
-                        class="fa fa-check-square-o"></i> Terima</button>
+                <button id="proses" onclick="proses()" type="button" class="btn {{$bgcolor}} prs"><i
+                        class="fa fa-history"></i> Proses</button>
             </div>
+
+
         </div>
     </div>
 </div>

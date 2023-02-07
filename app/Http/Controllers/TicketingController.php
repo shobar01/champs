@@ -57,6 +57,7 @@ class TicketingController extends Controller
 
     public function ticketing(Request $request)
     {
+
         $nip = $this->nip();
         $tipe = $request->input('tipe');
         $tanggal = $request->input('tanggal');
@@ -68,6 +69,7 @@ class TicketingController extends Controller
         } else {
             $kdstatus = 'T001';
         }
+
         $data = [
             'nip' => $nip,
             'tanggal' => $tanggal,
@@ -85,6 +87,7 @@ class TicketingController extends Controller
         $jsons = $response->getBody()->getContents();
         $json = json_decode($jsons, true);
         // dd($json);
+        $long = $json['long'];
         $df_status = $json['df_status'];
         $piltujuan = $json['piltujuan'];
         session(['piltujuan' => $piltujuan]);
@@ -97,7 +100,7 @@ class TicketingController extends Controller
         $bgcolor = $json['bgcolor'];
         $tanggalreq = $json['tanggalreq'];
         session(['tanggalreq' => $tanggalreq]);
-        return view('ticketing.ticketing', compact('piltujuan', 'kdstatus', 'bgcolor', 'nip', 'lstrack', 'df_status', 'tanggal', 'nmstatus', 'tanggalreq'));
+        return view('ticketing.ticketing', compact('long', 'piltujuan', 'kdstatus', 'bgcolor', 'nip', 'lstrack', 'df_status', 'tanggal', 'nmstatus', 'tanggalreq'));
     }
 
     public function openticket(Request $request)
@@ -117,12 +120,8 @@ class TicketingController extends Controller
 
     public function simpan_ticketing(Request $request)
     {
-        // dd($request->all());
-
-        // $kdoutlet = session('kd_dept') ?? 'MSJ00';
-        // $kdticket = $request->input('kdticket');
-        // $iddept = $request->input('nmoutlet');
-        $kdoutlet = session('kdoutlet');
+        $json1 = $this->location();
+        $kdoutlet = $json1['df_psnl'][0]['kdoutlet'];
         $tujuan = $request->input('tujuan');
         $kategori = $request->input('kategori');
         $pesan = $request->input('pesan');
@@ -143,13 +142,8 @@ class TicketingController extends Controller
             $linkurl1 = 'F';
         }
 
-        $json1 = $this->location();
-        session(['kdoutlet' => $json1['df_psnl'][0]['kdoutlet']]);
-        $kdoutlet = session('kdoutlet');
-
         $client = new \GuzzleHttp\Client();
         $data = [
-            // 'kdticket' => $kdticket,
             'nipreq' => session('nip'),
             'kdoutlet' => $kdoutlet,
             'kdtujuan' => $tujuan,
@@ -174,8 +168,9 @@ class TicketingController extends Controller
 
         $jsons = $response->getBody()->getContents();
         $json = json_decode($jsons, true);
-
-        $this->notif($namatxtujuan, $kdoutlet, $kategori, 'Ticket Baru');
+        $kdticket = $json['kdticket'];
+        $dept = session('dept');
+        $this->notif($namatxtujuan, $kdticket, $dept . '-' . $pesan, 'Ticket Baru');
         // dd($json);
         return redirect('ticketing')->with('success', 'Request Ticket Berhasil Dikirim');
     }
@@ -258,6 +253,18 @@ class TicketingController extends Controller
     {
         $dtujuan = $request->input('txtujuan');
         $dmessage = $request->input('txmessage');
-        return $this->notif($dtujuan, $dmessage, 'Reminder Ticketing');
+        $kdticket = $request->input('tiket');
+        return $this->notif($dtujuan, $dmessage, $kdticket, 'Reminder Ticketing');
+    }
+
+    public function getuniform()
+    {
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get('http://api2.champ-group.com/ticketing_api/uniformperso.php');
+        $jsons = $response->getBody()->getContents();
+        $json = json_decode($jsons, true);
+        // dd($json);
+        return response()->json($json['dfbrg']);
+
     }
 }

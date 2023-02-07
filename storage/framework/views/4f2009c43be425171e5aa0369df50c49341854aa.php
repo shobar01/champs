@@ -15,7 +15,8 @@
             <div class="modal-body body-bottom pt-2" id="backendp">
                 <form action="<?php echo e(route('simpan_ubahstatus')); ?>" method="POST" id="simpanstatus">
                     <?php echo csrf_field(); ?>
-
+                    <input type="hidden" name="depart" id="depart" value="">
+                    <input type="hidden" name="nmoutlet" id="nmoutletku" value="">
                     <input type="hidden" name="kdticket" id="kdticketku" value="">
                     <input type="hidden" name="nipreq" id="nipreq" value="">
                     <input type="hidden" name="nmstatus" id="nmstatus" value="">
@@ -41,9 +42,7 @@
                         <textarea onkeyup="reg('ket')" class="form-control" placeholder="Isi Keterangan" name="ket"
                             id="ket" rows="3">
                         </textarea>
-                        <textarea onkeyup="reg('ket')" class="form-control" placeholder="Isi Keterangan1" name="ket1"
-                            id="ket1" rows="3">
-                        </textarea>
+                        
 
                         </textarea>
                         <span id="error" class="err"></span>

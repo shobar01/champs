@@ -41,9 +41,9 @@
                         <textarea onkeyup="reg('ket')" class="form-control" placeholder="Isi Keterangan" name="ket"
                             id="ket" rows="3">
                         </textarea>
-                        {{-- <textarea onkeyup="reg('ket')" class="form-control" placeholder="Isi Keterangan1"
-                            name="ket1" id="ket1" rows="3">
-                        </textarea> --}}
+                        <textarea onkeyup="reg('ket')" class="form-control" placeholder="Isi Keterangan1" name="ket1"
+                            id="ket1" rows="3">
+                        </textarea>
 
                         </textarea>
                         <span id="error" class="err"></span>

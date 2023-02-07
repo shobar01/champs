@@ -1,4 +1,4 @@
-@extends('ticketing.layout.layout')
+@extends('backend.layout.layout')
 @section('content')
 
 <button type="button" class="btn btn-info btn-topright shadow" data-toggle="modal" data-target="#info"><i
@@ -46,7 +46,7 @@
                 <div class="row" id="isiticket">
                     @foreach ($lstrack as $item)
                     <div class="col-6 col-xs-6 col-sm-3 col-lg-3  p-1 xxc">
-                        <div class="card shadow m-1 card-rad" onclick="openticket('{{$item['kdticket']}}')">
+                        <div class="card shadow m-1 card-rad" onclick="openticketbe('{{$item['kdticket']}}')">
                             <div class="card-body card-rad p-0">
                                 <div class="row">
                                     <div class="col-3">
@@ -74,32 +74,6 @@
                     @endforeach
                 </div>
                 @endif
-
-                @if ($long == null)
-                <script>
-                    function alert(){
-                    Swal.fire({
-                        icon: 'warning',
-                        title:'Lokasi Tidak di Temukan',
-                        showCancelButton: false,
-                        confirmButtonText: 'Kembali',
-                        reverseButtons: true,
-                        allowOutsideClick: false
-                        }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.close()
-                        }
-                        })
-                }alert()
-                </script>
-                @else
-                <div class="btnx">
-                    <button class="btn btn-add" type="button" data-toggle="modal" data-target="#exampleModal"><i
-                            class="fa fa-plus fa-2x"></i></button>
-                    <span class="title">Add Request</span>
-                </div>
-                @endif
-
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div class="panel p-3">
@@ -118,33 +92,44 @@
                                 <p class="f-label">{{$df['nmstatus']}}</p>
                             </div>
                             @endforeach
+                            <div class="btdwn">
+                                {{-- <a href="{{ route('report') }}"> --}}
+                                    <button class="btn btn-dwn" type="button" onclick="laporan()"><i
+                                            class="fa fa-download fa-1x bold"></i>
+                                        Export</button>
+                                    {{-- </a> --}}
+                            </div>
+                            <div class="btkat">
+                                <button class="btn btn-add" type="button" onclick="addkateg()"><i
+                                        class="fa fa-plus fa-1x bold"></i>Add Kategori</button>
+                                <span class="title">Add Kategori</span>
+                            </div>
                         </div>
                     </div>
-                    <br>
                 </div>
+                <br>
             </div>
         </div>
     </div>
-
 </div>
 
-@include('ticketing.modal.informasi')
-@include('ticketing.modal.infokat')
-@include('ticketing.modal.tglhist')
-@include('ticketing.modal.detailtick')
-@include('ticketing.modal.note')
-@include('ticketing.modal.maps')
-@include('ticketing.modal.readby')
-@include('ticketing.modal.addreq')
-@include('ticketing.modal.rate')
-@include('ticketing.modal.klikfoto')
-@include('ticketing.modal.mdfoto')
-@include('ticketing.modal.tfoto')
-@include('ticketing.modal.terima')
-@include('ticketing.modal.tfototer')
-@include('ticketing.modal.uniform')
-@include('ticketing.script')
-<input type="hidden" id="testobay" value="F">
+</div>
+@include('backend.modal.excel')
+@include('backend.modal.addkat')
+@include('backend.modal.informasi')
+@include('backend.modal.tglhist')
+@include('backend.modal.detailtick')
+@include('backend.modal.maps')
+@include('backend.modal.klikfoto2')
+@include('backend.modal.tfoto2')
+@include('backend.modal.mdfoto2')
+@include('backend.modal.note')
+@include('backend.modal.proses')
+@include('backend.modal.eskalasi')
+@include('backend.modal.klikfotobe')
+@include('backend.modal.readby')
+@include('backend.script')
+
 
 @if (session('success'))
 <script>

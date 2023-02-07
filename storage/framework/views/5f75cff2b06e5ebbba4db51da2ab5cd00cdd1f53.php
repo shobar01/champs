@@ -174,7 +174,7 @@
                 $('#kategoriter').val(kdkat);
                 $('#txtujuan').val(iddepttujuan);
                 $('#txmessage').val(data[0]['keterangan']);
-                $('#nmoutlet').val(id_dept);
+                $('#tiket').val(kdticket);
                 for (let i = 0; i < data.length; i++) {
                     var kdstatus = data[i]['kdstatus'];
                     var image = data[i]['image'];
@@ -194,7 +194,7 @@
                     var alamat = data[i]['alamat'];
                     var ff = foto1=='F'?'pilih-ff':'';
                     var ff1 = foto1=='F'?'pilih-ff':'onclick="klikfoto(\''+foto1+','+kdticket+','+kdstatus+'\')"';
-                    
+                   
                 if(kdstatus == 'T001' || kdstatus == 'T010'){
                     var foto1 = data[i]['foto1'];
                     var ff = foto1=='F'?'pilih-ff':'';
@@ -441,6 +441,16 @@ function validasi() {
         let nmdept = $('#tuj'+dept).html();
         $('#namatxtujuan').val(nmdept)
        
+        // if (dept == 'DE013') {
+        //     $('#uniform').modal('show');
+        //     $('#exampleModal').modal('hide');
+        // }
+        // let kategorii = $('#kategori').val();
+        // if (kategorii == 'KT001') {
+        //     $('#uniform').modal('show');
+        //     $('#exampleModal').modal('hide');
+        // }
+
         $.ajaxSetup({
         headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -460,6 +470,9 @@ function validasi() {
                     $('#kategori').append(rowkat)
                        console.log(data)
                 }
+
+               
+                
                 if(katdept.length < 1){
                     $("#kategori").prop('disabled', true);
                     $("#pesan").prop('disabled', true).val("");
@@ -485,6 +498,84 @@ function validasi() {
             }
         }); 
     }
+
+    function piluniform(){
+        let dept = $('#idtujuantck').val();
+        var kategorii = $('#kategori').val();
+        if (dept == 'DE013' && kategorii == 'KT002') {
+            $('#uniform').modal('show');
+            $('#exampleModal').modal('hide');
+        }  
+
+        $.ajaxSetup({
+        headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+        $.ajax({
+            type: 'GET',
+            url: '<?php echo e(url("getuniform")); ?>',
+            data: {"_token": "<?php echo e(csrf_token()); ?>"},
+            dataType: 'json',
+            success:function(data){
+                console.log(data)
+                let clbk = $(".clbk").map(function(){return $(this).html();}).get();
+                console.log(clbk)
+                for (let i = 0; i < data.length; i++) {
+                  var kdbrg = data[i]['kdbrg'];
+                  var nmbrg = data[i]['nmbrg'];
+                  var sat = data[i]['sat1'];
+                  var harga = data[i]['lastharga'];
+                  var xoxo ="";
+                    if(clbk.find(e => e === kdbrg)){
+                        xoxo = 'disabled';
+                    }else{
+                        xoxo = 'onchange="pilihitem(\''+kdbrg+'\')"';
+                    }
+                  var row ='<tr id="cc'+kdbrg+'" class="crbrg"> ' +
+                    '<th id="pl1'+kdbrg+'">'+kdbrg+'</th>'+
+                    '<th id="pl2'+kdbrg+'">'+nmbrg+'</th>'+
+                    '<th id="pl3'+kdbrg+'">'+sat+'</th>'+
+                    '<th id="pl4'+kdbrg+'">'+harga+'</th>'+
+                    '<th><input type="checkbox" id="pl6'+kdbrg+'" class="ckbx" name="ckbx[]" '+xoxo+'></th>'+
+                  '</tr>';
+                $('#brguniform').append(row);
+                }
+            },error: function () {
+            }
+        }); 
+    }
+
+    function pilihitem(x){
+        if ($('#pl6'+x).is(':checked')) {
+            $('#cc'+x).css('background','lightgreen');
+            var kdbrgy = $('#pl1'+x).html();
+            var nmbrgy = $('#pl2'+x).html();
+            var saty = $('#pl3'+x).html();
+            var hargay = $('#pl4'+x).html();
+            var rowy = '<tr id="dd'+kdbrgy+'"> ' +
+                            '<th>'+kdbrgy+'</th> ' +
+                            '<th>'+nmbrgy+'</th> ' +
+                            '<th>'+saty+'</th> ' +
+                            '<th>'+hargay+'</th> ' +
+                            '<th><i class="fa fa-times-circle" onclick="delpil(\''+kdbrgy+'\')"></i></th> ' +
+                        '</tr> ';
+            $('#hasilpilbarang').append(rowy);
+        }else{
+            $('#cc'+x).css('background','');
+            $('#dd'+x).remove();
+        }
+    }
+    function delpil(x){
+        $('#cc'+x).css('background','');
+        $('#dd'+x).remove();
+        $('#pl6'+x).prop("checked", false);
+    }
+
+    function closeform(){
+       $('#exampleModal').modal('show');
+       $('#uniform').modal('hide');
+   }
 
     function info(){
         $('#infokat').modal('show');
@@ -531,11 +622,21 @@ function validasi() {
         $('#prterima').modal('hide'); 
         startVideo()
     }
+    
     function cbukafoto(){        
         $('#fototick').modal('hide');
-        $('#prterima').modal('show'); 
+        if (kdstatus == 'T005') {
+            $('#prterima').modal('show'); 
+        } else {
+            $('#prterima').modal('hide'); 
+        }
         startVideo()
     }
+    // function cbukafoto2(){        
+    //     $('#fototick').modal('hide');
+    //     $('#prterima').modal('show'); 
+    //     startVideo()
+    // }
 
     function klikfoto(y){
         var a = y.split(',');
@@ -595,6 +696,7 @@ function validasi() {
             // var kdkat = $('#isikatbaru').val();
             var deptujuan = $('#txtujuan').val();
             var message = $('#txmessage').val();
+            var kdticket = $('#tiket').val();
                 $.ajaxSetup({
                 headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -602,7 +704,7 @@ function validasi() {
                 });
                 $.ajax({
                     type: 'GET',
-                    url: '<?php echo e(url("reminder")); ?>?txtujuan='+deptujuan+'&txmessage='+message,
+                    url: '<?php echo e(url("reminder")); ?>?txtujuan='+deptujuan+'&txmessage='+message+'&tiket='+kdticket,
                     data: {"_token": "<?php echo e(csrf_token()); ?>"},
                     dataType: 'json',
                     success:function(data){  
@@ -653,7 +755,17 @@ function validasi() {
     $('#prterima').modal('show'); 
      console.log($('#testobay').val())
 }
+</script>
 
+<script type="application/javascript">
+    $(document).ready(function(){
+    $("#searchbrg").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#brguniform tr.crbrg").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
 </script>
 
 <script>
@@ -806,7 +918,4 @@ function validasi() {
 
     getCameraSelection();
     // getCameraSelection2();
-</script>
-
-
-<?php /**PATH G:\ChampApplication\xampp\htdocs\champs-mobile\resources\views/ticketing/script.blade.php ENDPATH**/ ?>
+</script><?php /**PATH G:\ChampApplication\xampp\htdocs\champs-mobile\resources\views/ticketing/script.blade.php ENDPATH**/ ?>

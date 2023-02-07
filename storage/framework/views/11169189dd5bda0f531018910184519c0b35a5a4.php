@@ -96,6 +96,11 @@
                                 <p class="f-label"><?php echo e($df['nmstatus']); ?></p>
                             </div>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <div class="btdwn">
+                                <button class="btn btn-dwn" type="button" onclick="laporan()"><i
+                                        class="fa fa-download fa-1x bold"></i>
+                                    Export</button>
+                            </div>
                             <div class="btkat">
                                 <button class="btn btn-add" type="button" onclick="addkateg()"><i
                                         class="fa fa-plus fa-1x bold"></i>Add Kategori</button>
@@ -111,6 +116,7 @@
 </div>
 
 </div>
+<?php echo $__env->make('backend.modal.excel', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('backend.modal.addkat', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('backend.modal.informasi', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('backend.modal.tglhist', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

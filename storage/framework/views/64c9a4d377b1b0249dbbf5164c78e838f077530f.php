@@ -5,6 +5,7 @@
             <div class="modal-header <?php echo e($bgcolor); ?> content-bottom">
                 <input type="hidden" id="txtujuan">
                 <input type="hidden" id="txmessage">
+                <input type="hidden" id="tiket">
                 <h5 class="modal-title">
                     <span id="detailtcLabel">Detail Tiket</span>
                     <input type="text" class="titlereq" readonly><i class="fa fa-copy fa-1x cps" onclick="copied()"></i>

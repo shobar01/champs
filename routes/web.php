@@ -184,6 +184,7 @@ Route::get('datatujuan', [TicketingController::class, 'datatujuan'])->name('data
 Route::post('simpan_rating', [TicketingController::class, 'simpan_rating'])->name('simpan_rating');
 Route::get('ambiltgl', [TicketingController::class, 'ambiltgl'])->name('ambiltgl');
 Route::get('reminder', [TicketingController::class, 'reminder'])->name('reminder');
+Route::get('getuniform', [TicketingController::class, 'getuniform'])->name('getuniform');
 
 // backend
 Route::post('simpan_ubahstatus', [BackendController::class, 'simpan_ubahstatus'])->name('simpan_ubahstatus');
@@ -194,4 +195,5 @@ Route::post('simpan_kategori', [BackendController::class, 'simpan_kategori'])->n
 Route::post('hapus_kategori', [BackendController::class, 'hapus_kategori'])->name('hapus_kategori');
 Route::post('nipeska', [BackendController::class, 'nipeska'])->name('nipeska');
 Route::post('simpaneskalasi', [BackendController::class, 'simpaneskalasi'])->name('simpaneskalasi');
+Route::post('report', [BackendController::class, 'report'])->name('report');
 Auth::routes();

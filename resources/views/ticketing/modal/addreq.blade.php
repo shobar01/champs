@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label f-14">Kategori</label>
-                        <select class="form-control" name="kategori" id="kategori" disabled>
+                        <select class="form-control" name="kategori" id="kategori" onchange="piluniform()" disabled>
 
                         </select>
                     </div>

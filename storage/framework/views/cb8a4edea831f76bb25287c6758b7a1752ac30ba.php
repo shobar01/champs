@@ -179,10 +179,11 @@
                 $('#nipreq').val(nip);
                 var data = response['dettrack'];
                 var id_dept = response['id_dept'];
-                
+                $('#nmoutletku').val(id_dept);
                 var kddept = response['kddept'];
                 $('#deptawal').val(kddept);
                 var iddepttujuan = response['iddepttujuan'];
+                $('#depart').val(iddepttujuan);
                 console.log(kddept);
                 $('#pilihan'+kddept).hide();
                 var nmkat = response['nmkat'];
@@ -379,7 +380,22 @@ function TestMarker(latt,longg,nm,alamat) {
             showConfirmButton:false,
             })
 		}
-  
+	}
+
+    function downloadval() {
+            Swal.fire({
+            title: 'Download Laporan?',
+            showCancelButton: true,
+            confirmButtonText: 'Download',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+            }).then((result) => {
+        if (result.isConfirmed) {
+            $('#lapexcel').attr('disabled','disabled')
+			$('#download').submit()
+        }
+        })
+		
 	}
     function reg(id){
         var textarea = $('#'+id).val();
@@ -575,6 +591,10 @@ function TestMarker(latt,longg,nm,alamat) {
         
         var objDiv = document.getElementById("barunich");
         objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+    function laporan(){
+        $('#lapex').modal('show');
     }
 
 
@@ -846,5 +866,10 @@ function TestMarker(latt,longg,nm,alamat) {
         var c = text.replace(/[^a-zA-Z0-9:,. ]/g, '');
         $('#keteska').val(c);
         $('#keteska2').val(c);
+    }
+    function donepil(){
+        setTimeout(function(){
+        $('#lapex').modal('hide')
+        }, 2000);
     }
 </script><?php /**PATH G:\ChampApplication\xampp\htdocs\champs-mobile\resources\views/backend/script.blade.php ENDPATH**/ ?>

@@ -1266,6 +1266,45 @@
         border-radius: 2px;
     }
 
+    .btdwn {
+        position: absolute;
+        bottom: 145px;
+        left: 4%;
+    }
+
+    .btdwn .title {
+        position: absolute;
+        top: -70px;
+        left: 50%;
+        transform: translate(-50%, 15%);
+        width: auto;
+        background: #fff;
+        padding: 5px 10px;
+        border-radius: 7px;
+        transition: 0.5s;
+        opacity: 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        visibility: hidden;
+    }
+
+    .btdwn:hover .title {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, 50%);
+    }
+
+    .btdwn .title::before {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background-color: #fff;
+        bottom: -8px;
+        left: 48%;
+        transform: rotate(45deg) translateX(-50%);
+        border-radius: 2px;
+    }
+
     .btkat {
         position: absolute;
         bottom: 145px;
@@ -1307,6 +1346,13 @@
 
     .btn-add {
         background: linear-gradient(324deg, #dd0000, #d12323);
+        color: white;
+        border-radius: 12px;
+        border: 0;
+    }
+
+    .btn-dwn {
+        background: linear-gradient(324deg, #5500dd, #0867da);
         color: white;
         border-radius: 12px;
         border: 0;
@@ -1583,5 +1629,9 @@
         color: white;
         border-radius: 12px;
         white-space: nowrap;
+    }
+
+    .select2 {
+        width: 100% !important;
     }
 </style><?php /**PATH G:\ChampApplication\xampp\htdocs\champs-mobile\resources\views/backend/css.blade.php ENDPATH**/ ?>
